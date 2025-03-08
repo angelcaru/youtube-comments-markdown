@@ -6,7 +6,7 @@
 
 function renderHTMLAsDiv(html) {
     const div = document.createElement("div");
-    div.innerHTML = html;
+    div.innerHTML = DOMPurify.sanitize(html);
     return div;
 }
 
@@ -49,7 +49,7 @@ const UNLOADED_DELAY = 500;
 const LOADED_DELAY = 50;
 
 function main() {
-    const md = markdownit();
+    const md = markdownit({ html: true });
 
     const commentsContainer = document.querySelector(".ytd-comments > #contents");
     if (commentsContainer === null) {

@@ -19,7 +19,7 @@
     // },
     "content_scripts": [{
         "css": ["libs/github-dark.min.css"],
-        "js": ["foreground.js", "libs/markdownit.js", "libs/highlight.js"],
+        "js": ["foreground.js", "libs/markdownit.js", "libs/highlight.js", "libs/purify.min.js"],
         "matches": ["https://*/*"]
     }]
 }
