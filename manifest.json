@@ -1,0 +1,25 @@
+{
+    // Comments are accepted in the manifest, even though it is JSON.
+    "manifest_version": 3,
+    "name": "Markdown for YouTube comments",
+    "description": "Simple extension that renders YouTube comments with Markdown",
+    "version": "0.1.0",
+    // "icons": {
+    //     "16": "logo/logo-16.png",
+    //     "48": "logo/logo-48.png",
+    //     "128": "logo/logo-128.png"
+    // },
+    // "options_page": "settings/settings.html",
+    "permissions": [],
+    "host_permissions": [
+        "*://*/*"
+    ],
+    // "background": {
+    //     "service_worker": "service-worker.js"
+    // },
+    "content_scripts": [{
+        "css": ["libs/github-dark.min.css"],
+        "js": ["foreground.js", "libs/markdownit.js", "libs/highlight.js"],
+        "matches": ["https://*/*"]
+    }]
+}
