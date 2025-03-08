@@ -4,6 +4,22 @@
 // Several foreground scripts can be declared
 // and injected into the same or different pages.
 
+function renderComment(md, comment) {
+    // TODO: detect when a comment is edited and re-render markdown
+    const attribute = "data-ytcmd-converted";
+    if (comment.hasAttribute(attribute)) return;
+    comment.setAttribute(attribute, "true");
+    const commentText = comment.querySelector("#content-text");
+
+    const result = md.render(commentText.innerText);
+    commentText.innerHTML = result;
+    commentText.style.lineHeight = "2em";
+
+    for (const code of commentText.querySelectorAll("pre code")) {
+        hljs.highlightElement(code);
+    }
+}
+
 const UNLOADED_DELAY = 500;
 const LOADED_DELAY = 50;
 
@@ -18,22 +34,9 @@ function main() {
 
     const comments = Array.from(commentsContainer.querySelectorAll("ytd-comment-thread-renderer"));
     for (const comment of comments) {
-        console.log(comment);
-
-        // TODO: detect when a comment is edited and re-render markdown
-        const attribute = "data-ytcmd-converted";
-        if (comment.hasAttribute(attribute)) continue;
-        comment.setAttribute(attribute, "true");
-        const commentText = comment.querySelector("#content-text");
-
-        console.log(commentText.innerText);
-        const result = md.render(commentText.innerText);
-        console.log(result);
-        commentText.innerHTML = result;
-        commentText.style.lineHeight = "2em";
-
-        for (const code of commentText.querySelectorAll("pre code")) {
-            hljs.highlightElement(code);
+        renderComment(md, comment);
+        for (const reply of comment.parentElement.querySelectorAll("ytd-comment-view-model")) {
+            renderComment(md, reply);
         }
     }
 
