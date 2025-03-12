@@ -21,7 +21,7 @@ function renderComment(md, comment) {
         return;
     }
 
-    const result = md.render(commentText.innerText);
+    const result = md.render(commentText.innerText.replaceAll("\n", "<br>"));
     const div = renderHTMLAsDiv(result);
     commentText.replaceWith(div);
     div.style.lineHeight = "1.7em";
