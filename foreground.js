@@ -21,7 +21,7 @@ function renderComment(md, comment) {
         return;
     }
 
-    const result = md.render(commentText.innerText.replaceAll("\n", "<br>"));
+    const result = md.render(commentText.innerText);
     const div = renderHTMLAsDiv(result);
     commentText.replaceWith(div);
     div.style.lineHeight = "1.7em";
@@ -53,7 +53,10 @@ const UNLOADED_DELAY = 500;
 const LOADED_DELAY = 50;
 
 function main() {
-    const md = markdownit({ html: true });
+    const md = markdownit({
+        html: true,
+        breaks: true,
+    });
 
     const commentsContainer = document.querySelector(".ytd-comments > #contents");
     if (commentsContainer === null) {
