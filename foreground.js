@@ -16,6 +16,10 @@ function renderComment(md, comment) {
     if (comment.hasAttribute(attribute)) return;
     comment.setAttribute(attribute, "true");
     const commentText = comment.querySelector("#content-text");
+    if (commentText === null) {
+        console.log("Didn't find #content-text. Early return");
+        return;
+    }
 
     const result = md.render(commentText.innerText);
     const div = renderHTMLAsDiv(result);
