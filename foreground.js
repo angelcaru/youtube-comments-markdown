@@ -27,6 +27,8 @@ function renderComment(md, comment) {
         return;
     }
     for (const link of commentText.querySelectorAll("a")) {
+        // Dirty hack to keep links in actual markdown intact
+        if (link.innerText.endsWith(")")) continue;
         link.outerHTML = `[${link.innerText}](${link.href})`;
     }
 
