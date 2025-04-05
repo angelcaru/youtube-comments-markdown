@@ -20,6 +20,9 @@ function renderComment(md, comment) {
         console.log("Didn't find #content-text. Early return");
         return;
     }
+    for (const link of commentText.querySelectorAll("a")) {
+        link.outerHTML = `[${link.innerText}](${link.href})`;
+    }
 
     const result = md.render(commentText.innerText);
     const div = renderHTMLAsDiv(result);
