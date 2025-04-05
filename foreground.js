@@ -10,6 +10,12 @@ function renderHTMLAsDiv(html) {
     return div;
 }
 
+const ESCAPES = {
+    "\\C": ":",
+    "\\S": "/",
+    "\\D": ".",
+};
+
 function renderComment(md, comment) {
     // TODO: detect when a comment is edited and re-render markdown
     const attribute = "data-ytcmd-converted";
@@ -24,7 +30,8 @@ function renderComment(md, comment) {
         link.outerHTML = `[${link.innerText}](${link.href})`;
     }
 
-    const result = md.render(commentText.innerText);
+    const text = Object.entries(ESCAPES).reduce((text, [key, value]) => text.replaceAll(key, value), commentText.innerText);
+    const result = md.render(text);
     const div = renderHTMLAsDiv(result);
     commentText.replaceWith(div);
     div.style.lineHeight = "1.7em";
